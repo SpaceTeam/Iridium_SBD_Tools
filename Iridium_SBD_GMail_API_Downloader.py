@@ -118,6 +118,8 @@ def SaveAttachments(service, user_id, msg_id):
             #     f.close()
             print("Data:")
             print(file_data)
+            with open(path, "wb") as f:
+                f.write(file_data)
 
 def SaveMessageBody(service, user_id, msg_id):
     """Save the body from Message with given id.
