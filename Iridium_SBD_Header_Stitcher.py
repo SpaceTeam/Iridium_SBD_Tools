@@ -36,11 +36,13 @@ for root, dirs, files in os.walk("."):
                             # Possibly redundant?
                             if (words[9] == "Session") and (words[10] == "Status:"):
                                 fp.write((words[11]+',').encode("utf-8"))  # Session Status
-                        if len(words) >= 11:
+                        if len(words) >= 8:
                             if (words[0] == "Unit") and (words[1] == "Location:"):
                                 fp.write((words[4]+',').encode("utf-8"))  # Lat
                                 fp.write((words[7]+',').encode("utf-8"))  # Lon
-                                fp.write((words[10]+',').encode("utf-8"))  # CEPradius
+                        if len(words) >= 3:
+                            if (words[0] == "CEPradius"):
+                                fp.write((words[2] + ",").encode("utf-8")) # CEPradius
                     fp.write('\r\n'.encode("utf-8"))
                     fr.close()
 
