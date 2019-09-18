@@ -42,7 +42,7 @@ for root, dirs, files in os.walk("."):
                         fp.write(msn.encode("utf-8"))
                         fr = open(longfilename, 'rb')
                         binary_data = fr.read()
-                        timestamp = str(int.from_bytes(binary_data[1:5], "big")) + ","
+                        timestamp = str(int.from_bytes(binary_data[1:5], "little")) + ","
                         lat = str(struct.unpack("f", binary_data[5:9])[0]) + ","
                         lon = str(struct.unpack("f", binary_data[9:13])[0]) + ","
                         gnss_altitude = str(struct.unpack("f", binary_data[13:17])[0]) + ","
