@@ -13,6 +13,7 @@ import base64
 import email
 import datetime
 import time
+import base64
 
 from apiclient import discovery
 from oauth2client import client
@@ -112,9 +113,11 @@ def SaveAttachments(service, user_id, msg_id):
             file_data = base64.urlsafe_b64decode(data.encode('UTF-8'))
             path = date_str+part['filename']
 
-            with open(path, 'w') as f:
-                f.write(file_data)
-                f.close()
+            # with open(path, 'w') as f:
+            #     f.write(file_data.decode("base64"))
+            #     f.close()
+            print("Data:")
+            print(file_data)
 
 def SaveMessageBody(service, user_id, msg_id):
     """Save the body from Message with given id.
@@ -127,7 +130,7 @@ def SaveMessageBody(service, user_id, msg_id):
     """
     message = service.users().messages().get(userId=user_id, id=msg_id, format='raw').execute()
     msg_str = base64.urlsafe_b64decode(message['raw'].encode('ASCII'))
-    mime_msg = email.message_from_string(msg_str)
+    mime_msg = email.message_from_string(msg_str.decode("utf-8"))
     messageMainType = mime_msg.get_content_maintype()
     file_data = ''
     #print(messageMainType)
@@ -150,7 +153,7 @@ def SaveMessageBody(service, user_id, msg_id):
     local_date = datetime.datetime.fromtimestamp(float(message['internalDate'])/1000.)
     date_str = local_date.strftime("%y-%m-%d_%H-%M-%S_")
     
-    subject = GetSubject(service, user_id, msg_id);
+    subject = GetSubject(service, user_id, msg_id)
     for c in r' []/\;,><&*:%=+@!#^()|?^': # substitute any invalid characters
         subject = subject.replace(c,'_')
  
