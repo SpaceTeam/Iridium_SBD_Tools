@@ -46,6 +46,9 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# Visual Studio Code
+.vscode
+
 
 *.txt
 *.sbd
